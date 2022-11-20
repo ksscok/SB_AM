@@ -13,12 +13,8 @@ import com.kss.exam.demo.vo.Article;
 @Controller
 public class UsrArticleController {
 
+	@Autowired
 	private ArticleService articleService;
-
-	UsrArticleController() {
-		articleService = new ArticleService();
-		articleService.makeTestData();
-	}
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
