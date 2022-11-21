@@ -53,7 +53,6 @@ public class UsrArticleController {
 		if(article == null) {
 			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 		}
-		
 		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.", id), article);
 	}
 	
