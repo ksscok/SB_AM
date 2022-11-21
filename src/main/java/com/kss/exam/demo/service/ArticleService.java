@@ -31,8 +31,8 @@ public class ArticleService {
 		articleRepository.modifyArticle(id, title, body);
 	}
 	
-	public void removeArticle(int id) {
-		articleRepository.removeArticle(id);
+	public void deleteArticle(int id) {
+		articleRepository.deleteArticle(id);
 	}
 	
 	public List<Article> getArticles() {
