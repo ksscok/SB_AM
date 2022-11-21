@@ -36,7 +36,15 @@ public interface MemberRepository {
 			FROM `member`
 			WHERE loginId = #{loginId}
 			""")
-	public Member getMemberByLoginId(String loginId);
+	public Member getMemberByLoginId(@Param("loginId")String loginId);
+
+	@Select("""
+			SELECT *
+			FROM `member`
+			WHERE `name` = #{name}
+			AND email = #{email}
+			""")
+	public Member getMemberByNameAndEmail(@Param("name")String name, @Param("email")String email);
 	
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();
