@@ -30,6 +30,13 @@ public interface MemberRepository {
 			WHERE id = #{id}
 			""")
 	public Member getMemberById(@Param("id")int id);
+
+	@Select("""
+			SELECT *
+			FROM `member`
+			WHERE loginId = #{loginId}
+			""")
+	public Member getMemberByLoginId(String loginId);
 	
 	@Select("SELECT LAST_INSERT_ID()")
 	public int getLastInsertId();
