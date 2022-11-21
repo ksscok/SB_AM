@@ -20,7 +20,9 @@ public class UsrArticleController {
 	@ResponseBody
 	public Article doAdd(String title, String body) {
 
-		Article article = articleService.writeArticle(title, body);
+		int id = articleService.writeArticle(title, body);
+		
+		Article article = articleService.getArticleById(id);
 
 		return article;
 	}
