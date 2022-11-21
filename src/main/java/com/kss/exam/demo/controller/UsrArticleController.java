@@ -20,7 +20,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public ResultData doAdd(String title, String body) {
+	public ResultData<Article> doAdd(String title, String body) {
 		
 		if(Ut.empty(title)) {
 			return ResultData.from("F-1", "title을 입력해주세요.");
@@ -33,20 +33,20 @@ public class UsrArticleController {
 		int id = writeArticleRd.getData1();
 		
 		Article article = articleService.getArticleById(id);
-
-		return ResultData.from(writeArticleRd.getResultCode(), writeArticleRd.getMsg(), article);
+		
+		return ResultData.newData(writeArticleRd, article);
 	}
 
 	@RequestMapping("/usr/article/getArticles")
 	@ResponseBody
-	public ResultData getArticles() {
+	public ResultData<List> getArticles() {
 		List<Article> articles = articleService.getArticles();
 		return ResultData.from("S-1", "게시물 리스트", articles);
 	}
 	
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
-	public ResultData getArticle(int id) {
+	public ResultData<Article> getArticle(int id) {
 		
 		Article article = articleService.getArticleById(id);
 		
