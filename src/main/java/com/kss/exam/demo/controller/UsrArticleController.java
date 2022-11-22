@@ -84,11 +84,11 @@ public class UsrArticleController {
 			memberId = (int)httpSession.getAttribute("loginedMemberId");
 		}
 		if(isLogined == false) {
-			return ResultData.from("F-A", "로그인 되어있지 않습니다.");
+			return ResultData.from("F-2", "로그인 후 이용해주세요.");
 		}
 		
 		if(article.getMemberId() != memberId) {
-			return ResultData.from("F-2", "권한이 없습니다.");
+			return ResultData.from("F-3", "권한이 없습니다.");
 		}
 		
 		articleService.deleteArticle(id);
@@ -98,12 +98,25 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData<Integer> doModify(int id, String title, String body) {
+	public ResultData<Integer> doModify(HttpSession httpSession, int id, String title, String body) {
+		boolean isLogined = false;
+		int memberId = -1;
 		
 		Article article = articleService.getArticleById(id);
 		
 		if(article == null) {
 			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
+		}
+		
+		if(httpSession.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+			memberId = (int)httpSession.getAttribute("loginedMemberId");
+		}
+		if(isLogined == false) {
+			return ResultData.from("F-2", "로그인 후 이용해주세요.");
+		}
+		if(article.getMemberId() != memberId) {
+			return ResultData.from("F-3", "권한이 없습니다.");
 		}
 		
 		articleService.modifyArticle(id, title, body);
