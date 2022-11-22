@@ -5,13 +5,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시물 리스트</title>
+<title>게시물 리스트 페이지</title>
 </head>
 <body>
-	<h1>게시물 리스트</h1>
+	<h1>게시물 리스트 페이지</h1>
 	
-	<hr />
-	
+	<header>
+		<a href="/">로고</a>
+		<ul>
+			<li><a href="/">홈</a></li>
+			<li><a href="/usr/article/list">리스트</a></li>
+		</ul>
+	</header>
+		
 	<table border="1">
 		<thead>
 			<tr>
