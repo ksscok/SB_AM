@@ -39,12 +39,6 @@
 		WHERE id = #{id}
 	</delete>
 
-	<select id="getArticles" resultType="Article">
-		SELECT * 
-		FROM article 
-		ORDER BY id DESC
-	</select>
-
 	<select id="getLastInsertId" resultType="int">
 		SELECT last_insert_id()
 	</select>
