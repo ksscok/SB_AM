@@ -105,7 +105,8 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	public ResultData<Integer> doModify(HttpServletRequest req, int id, String title, String body) {
-		Rq rq = (Rq)req.getAttribute("rq");		
+		Rq rq = (Rq)req.getAttribute("rq");
+		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
 		if(article == null) {
