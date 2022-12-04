@@ -56,7 +56,7 @@ public class UsrMemberController {
 	}
 	
 	@RequestMapping("/usr/member/login")
-	public String showLogin(HttpSession httpSession) {
+	public String showLogin() {
 		return "usr/member/login";
 	}
 	
@@ -92,19 +92,15 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public ResultData<Member> doLogout(HttpSession httpSession) {
-		boolean isLogined = false;
+	public String doLogout(HttpServletRequest req) {
+		Rq rq = (Rq)req.getAttribute("rq");
 		
-		if(httpSession.getAttribute("loginedMemberId") != null) {
-			isLogined = true;
+		if(rq.isLogined() == false) {
+			return Ut.jsHistoryBack("로그인 되어있지 않습니다.");
 		}
 		
-		if(isLogined == false) {
-			return ResultData.from("F-A", "로그인 되어있지 않습니다.");
-		}
+		rq.logout();
 		
-		httpSession.removeAttribute("loginedMemberId");
-		
-		return ResultData.from("S-1", "로그아웃 되었습니다.");
+		return Ut.jsReplace("로그아웃 되었습니다.", "/");
 	}
 }
