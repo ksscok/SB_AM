@@ -145,4 +145,8 @@ public class UsrArticleController {
 		return Ut.jsReplace(Ut.f("%d번 글이 수정되었습니다.", id), Ut.f("../article/detail?id=%d", id));
 	}
 	
+	@RequestMapping("/usr/article/write")
+	public String showWrite(HttpServletRequest req, Model model) {
+		return "usr/article/write";
+	}
 }
