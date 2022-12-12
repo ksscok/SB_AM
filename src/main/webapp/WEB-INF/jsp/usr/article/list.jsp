@@ -6,8 +6,25 @@
 
 <section class="mt-5">
 	<div class="container mx-auto px-3">
-		<div>
-			게시물 개수 : <span class="text-blue-700">${articlesCount}개</span>
+		<div class="flex">
+			<div>
+				게시물 개수 : <span class="text-blue-700">${articlesCount}개</span>
+			</div>
+			<div class="flex-grow"></div>
+			<form action="" class="flex">
+				<input type="hidden" name="boardId" value="${param.boardId}" />
+				
+				<select name="searchKeywordTypeCode" data-value="${param.searchKeywordTypeCode}">
+					<option disabled="disabled">검색타입</option>
+					<option value="title">제목</option>
+					<option value="body">내용</option>
+					<option value="title,body">제목, 내용</option>
+				</select>
+				
+				<input name="searchKeyword" type="text" value="${param.searchKeyword}" placeholder="검색어" maxlength="20"  class="ml-2 w-72 input input-bordered"/>
+				
+				<button type="submit" class="ml-2 btn btn-primary">검색</button>
+			</form>
 		</div>
 		<div class="mt-3">
 			<table class="table table-fixed w-full">

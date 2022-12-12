@@ -29,8 +29,8 @@
 </head>
 	<body>
 		<header>
-				<div class="flex bg-red-300 h-20 container mx-auto">
-						<a href="/" class="flex bg-blue-300 items-center px-3">
+				<div class="flex h-20 container mx-auto">
+						<a href="/" class="flex items-center px-3">
 						 <span>로고</span>
 						</a>
 						<div class="flex-grow"></div>
@@ -73,8 +73,8 @@
 				</div>
 		</header>
 		
-		<section class="bg-green-300 mt-5">
-			<div class="bg-yellow-300 container mx-auto px-3">
+		<section class="mt-5">
+			<div class="container mx-auto px-3">
 				<h1>${pageTitle}</h1>
 			</div>
 		</section>
