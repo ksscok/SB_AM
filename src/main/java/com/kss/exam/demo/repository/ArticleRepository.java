@@ -38,13 +38,32 @@ public interface ArticleRepository {
 			<if test="boardId != 0">
 				AND A.boardId = #{boardId}
 			</if>
+			<if test="searchKeyword != ''">
+				<choose>
+					<when test="searchKeywordTypeCode == 'title'">
+						AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>	
+					<when test="searchKeywordTypeCode == 'body'">
+						AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<otherwise>
+						AND(
+								A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+								OR
+								A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+							)
+					</otherwise>	
+				</choose>	
+			</if>
 			ORDER BY id DESC
 			<if test="limitStart != -1">
 				LIMIT #{limitStart}, #{limitTake}
 			</if>
 			</script>
 			""")
-	public List<Article> getForPrintArticles(@Param("boardId") int boardId, @Param("limitStart")int limitStart, @Param("limitTake") int limitTake);
+	public List<Article> getForPrintArticles(@Param("boardId") int boardId, 
+			@Param("limitStart")int limitStart, @Param("limitTake") int limitTake, 
+			@Param("searchKeywordTypeCode") String searchKeywordTypeCode, @Param("searchKeyword") String searchKeyword);
 
 	public int getLastInsertId();
 
@@ -73,8 +92,6 @@ public interface ArticleRepository {
 					</otherwise>	
 				</choose>	
 			</if>
-			
-			
 			</script>
 			""")
 	public int getArticlesCount(@Param("boardId") int boardId, String searchKeywordTypeCode, String searchKeyword);
