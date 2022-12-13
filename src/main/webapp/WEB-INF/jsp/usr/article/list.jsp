@@ -7,7 +7,7 @@
 <section class="mt-5">
 	<div class="container mx-auto px-3">
 		<div class="flex">
-			<div>
+			<div class="self-end">
 				게시물 개수 : <span class="text-blue-700">${articlesCount}개</span>
 			</div>
 			<div class="flex-grow"></div>

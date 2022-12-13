@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.kss.exam.demo.vo.Article;
 
@@ -56,14 +57,12 @@ public interface ArticleRepository {
 				</choose>	
 			</if>
 			ORDER BY id DESC
-			<if test="limitStart != -1">
+			<if test="limitTake != -1">
 				LIMIT #{limitStart}, #{limitTake}
 			</if>
 			</script>
 			""")
-	public List<Article> getForPrintArticles(@Param("boardId") int boardId, 
-			@Param("limitStart")int limitStart, @Param("limitTake") int limitTake, 
-			@Param("searchKeywordTypeCode") String searchKeywordTypeCode, @Param("searchKeyword") String searchKeyword);
+	public List<Article> getArticles(int boardId, String searchKeyword, String searchKeywordTypeCode, int limitStart, int limitTake);
 
 	public int getLastInsertId();
 
@@ -95,4 +94,13 @@ public interface ArticleRepository {
 			</script>
 			""")
 	public int getArticlesCount(@Param("boardId") int boardId, String searchKeywordTypeCode, String searchKeyword);
+
+	@Update("""
+			<script>
+			UPDATE article
+			SET hitCount = hitCount + 1
+			WHERE id = #{id}
+			</script>
+			""")
+	public int increaseHitCount(int id);
 }
