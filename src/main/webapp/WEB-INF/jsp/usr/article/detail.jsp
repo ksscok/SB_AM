@@ -13,6 +13,7 @@
 function ArticleDetail__increaseHitCout() {
 	$.get('../article/doIncreaseHitCountRd', {
 			id: params.id
+			ajaxMode: 'Y'
 		}, function(data) {
 			$('.article-detail__hit-count').empty().html(data.data1);
 		}, 'json');
