@@ -57,9 +57,15 @@ function ArticleDetail__increaseHitCout() {
             <td>${article.extra__writerName}</td>
           </tr>
           <tr>
-            <th>조회수</th>
+            <th>조회</th>
             <td>
               <span class="text-blue-700 article-detail__hit-count">${article.hitCount}</span>
+            </td>
+          </tr>
+          <tr>
+            <th>추천</th>
+            <td>
+              <span class="text-blue-700">${article.extra__goodReactionPoint}</span>
             </td>
           </tr>
           <tr>
