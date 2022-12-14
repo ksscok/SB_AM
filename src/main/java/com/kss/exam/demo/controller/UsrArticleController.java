@@ -86,6 +86,9 @@ public class UsrArticleController {
 
 		model.addAttribute("article", article);
 		
+		boolean actorCanMakeReactionPoint = articleService.actorCanMakeReactionPoint(rq.getLoginedMemberId(), id);
+		model.addAttribute("actorCanMakeReactionPoint", actorCanMakeReactionPoint);
+		
 		return "usr/article/detail";
 	}
 
