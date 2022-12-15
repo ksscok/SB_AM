@@ -93,7 +93,7 @@ function ArticleDetail__increaseHitCout() {
 	            		좋아요 👍
 	            		</a>
 		            	<span>&nbsp;</span>
-	            		<a href="/usr/reactionPoint/doBadCancelReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class="btn btn-xs  btn-secondary">
+	            		<a href="/usr/reactionPoint/doCancelBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class="btn btn-xs  btn-secondary">
 	            		싫어요 👎
 		            	</a>
 	            	</c:if>

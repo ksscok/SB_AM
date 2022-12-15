@@ -1,5 +1,6 @@
 package com.kss.exam.demo.repository;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -39,4 +40,20 @@ public interface ReactionPointRepository {
 			`point` = -1;
 			""")
 	public void addBadReactionPoint(int memberId, String relTypeCode, int relId);
+
+	@Delete("""
+			DELETE FROM reactionPoint
+			WHERE memberId = #{memberId}
+			AND relTypeCode = #{relTypeCode}
+			AND relId = #{relId}
+			""")
+	public void deleteGoodReactionPoint(int memberId, String relTypeCode, int relId);
+
+	@Delete("""
+			DELETE FROM reactionPoint
+			WHERE memberId = #{memberId}
+			AND relTypeCode = #{relTypeCode}
+			AND relId = #{relId}
+			""")
+	public void deleteBadReactionPoint(int memberId, String relTypeCode, int relId);
 }
