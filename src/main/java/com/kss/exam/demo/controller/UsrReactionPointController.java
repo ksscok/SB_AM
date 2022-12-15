@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kss.exam.demo.service.ReactionPointService;
+import com.kss.exam.demo.vo.ResultData;
 import com.kss.exam.demo.vo.Rq;
 
 @Controller
@@ -20,9 +21,9 @@ public class UsrReactionPointController {
 	@RequestMapping("/usr/reactionPoint/doGoodReaction")
 	@ResponseBody
 	String doGoodReaction(String relTypeCode, int relId, String replaceUri) {
-		boolean actorCanMackReactionPoint = reactionPointService.actorCanMakeReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
+		ResultData actorCanMakeReactionPointRd = reactionPointService.actorCanMakeReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
 
-		if (actorCanMackReactionPoint == false) {
+		if (actorCanMakeReactionPointRd.isSuccess() == false) {
 			return rq.jsHistoryBack("이미 처리되었습니다.");
 		}
 
@@ -34,9 +35,9 @@ public class UsrReactionPointController {
 	@RequestMapping("/usr/reactionPoint/doBadReaction")
 	@ResponseBody
 	String doBadReaction(String relTypeCode, int relId, String replaceUri) {
-		boolean actorCanMackReactionPoint = reactionPointService.actorCanMakeReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
+		ResultData actorCanMakeReactionPointRd = reactionPointService.actorCanMakeReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
 
-		if (actorCanMackReactionPoint == false) {
+		if (actorCanMakeReactionPointRd.isSuccess() == false) {
 			return rq.jsHistoryBack("이미 처리되었습니다.");
 		}
 
