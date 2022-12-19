@@ -154,13 +154,17 @@ function ArticleDetail__increaseHitCout() {
 		<h1>댓글 작성</h1>
 		<c:if test="${rq.logined}">
 			<form class="table-box-type-1" method="POST" action="../reply/doWrite" onsubmit="ReplyWrite__submitForm(this); return false;">
-				<input type="hidden" name="relTypeCode" value="aricle" />
+				<input type="hidden" name="relTypeCode" value="article" />
 				<input type="hidden" name="relId" value="${article.id}" />
 				<table>
 					<colgroup>
 						<col width="200" />
 					</colgroup>
 					<tbody>
+						<tr>
+							<th>relId</th>
+							<td>${article.id}</td>
+						</tr>
 						<tr>
 							<th>작성자</th>
 							<td>${rq.loginedMember.nickname}</td>
@@ -184,6 +188,12 @@ function ArticleDetail__increaseHitCout() {
 		<c:if test="${rq.notLogined}">
 			<a class="btn btn-link" href="/usr/member/login">로그인</a>후 이용해주세요.
 		</c:if>
+	</div>
+</section>
+
+<section class="mt-5">
+	<div class="container mx-auto px-3">
+		<h1>댓글 리스트(${repliesCount})</h1>
 	</div>
 </section>
 <!-- 

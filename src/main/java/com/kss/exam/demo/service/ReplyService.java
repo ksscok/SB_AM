@@ -1,9 +1,12 @@
 package com.kss.exam.demo.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.kss.exam.demo.repository.ReplyRepository;
 import com.kss.exam.demo.util.Ut;
+import com.kss.exam.demo.vo.Reply;
 import com.kss.exam.demo.vo.ResultData;
 import com.kss.exam.demo.vo.Rq;
 
@@ -22,5 +25,9 @@ public class ReplyService {
 		int id = replyRepository.getLastInsertId();
 
 		return ResultData.from("S-1", Ut.f("%d번 댓글이 생성되었습니다.", id), "id", id);
+	}
+
+	public List<Reply> getForPrintReplies(int loginedMemberId, String relTypeCode, int relId) {
+		return replyRepository.getForPrintReplies(loginedMemberId, relTypeCode, relId);
 	}
 }
