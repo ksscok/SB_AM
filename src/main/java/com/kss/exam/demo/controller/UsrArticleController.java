@@ -35,7 +35,17 @@ public class UsrArticleController {
 		this.replyService = replyService;
 		this.rq = rq;
 	}
+	
+	@RequestMapping("/usr/article/write")
+	public String showWrite( Model model) {
 
+		if (rq.isLogined() == false) {
+			return rq.jsHistoryBack("로그인 되어있지 않습니다.");
+		}
+
+		return "usr/article/write";
+	}
+	
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
 	public String doAdd(int boardId, String title, String body, String replaceUri) {
@@ -206,15 +216,5 @@ public class UsrArticleController {
 		articleService.modifyArticle(id, title, body);
 
 		return rq.jsReplace(Ut.f("%d번 글이 수정되었습니다.", id), Ut.f("../article/detail?id=%d", id));
-	}
-
-	@RequestMapping("/usr/article/write")
-	public String showWrite( Model model) {
-
-		if (rq.isLogined() == false) {
-			return rq.jsHistoryBack("로그인 되어있지 않습니다.");
-		}
-
-		return "usr/article/write";
 	}
 }
