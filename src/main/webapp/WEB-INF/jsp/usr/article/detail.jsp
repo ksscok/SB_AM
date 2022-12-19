@@ -42,7 +42,7 @@ function ArticleDetail__increaseHitCout() {
         <tbody>
           <tr>
             <th>번호</th>
-            <td>${article.id}</td>
+            <td><span class="font-bold">${article.id}</span></td>
           </tr>
           <tr>
             <th>작성날짜</th>
@@ -172,7 +172,7 @@ function ArticleDetail__increaseHitCout() {
 						<tr>
 							<th>내용</th>
 							<td>
-								<textarea name="body" rows="5" placeholder="내용"></textarea>
+								<textarea class="w-full textarea textarea-bordered" name="body" rows="5" placeholder="내용"></textarea>
 							</td>
 						</tr>
 						<tr>
