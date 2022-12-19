@@ -42,7 +42,9 @@ function ArticleDetail__increaseHitCout() {
         <tbody>
           <tr>
             <th>번호</th>
-            <td><span class="font-bold">${article.id}</span></td>
+            <td>
+            	<div class="badge badge-primary">${article.id}</div>
+            </td>
           </tr>
           <tr>
             <th>작성날짜</th>
@@ -59,41 +61,47 @@ function ArticleDetail__increaseHitCout() {
           <tr>
             <th>조회</th>
             <td>
-              <span class="text-blue-700 article-detail__hit-count">${article.hitCount}</span>
+              <span class="badge badge-primary article-detail__hit-count">${article.hitCount}</span>
             </td>
           </tr>
           <tr>
             <th>추천</th>
             <td>
             	<div class="flex items-center">
-		            <span class="text-blue-700">${article.goodReactionPoint}</span>
+		            <span class="badge badge-primary">${article.goodReactionPoint}</span>
 		          	<span>&nbsp;</span>
                 <c:if test="${actorCanMakeReaction}">								
-	            		<a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class="btn btn-xs  btn-primary btn-outline">
+	            		<a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" 
+	            		class="btn btn-xs  btn-primary btn-outline">
 	            		좋아요 👍
 	            		</a>
 		            	<span>&nbsp;</span>
-	            		<a href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class="btn btn-xs  btn-secondary btn-outline">
+	            		<a href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" 
+	            		class="btn btn-xs  btn-secondary btn-outline">
 	            		싫어요 👎
 		            	</a>
 	            	</c:if>
 	            	
               	<c:if test="${actorCanCancelGoodReaction}">								
-	            		<a href="/usr/reactionPoint/doCancelGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class="btn btn-xs  btn-primary">
+	            		<a href="/usr/reactionPoint/doCancelGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" 
+	            		class="btn btn-xs  btn-primary">
 	            		좋아요 👍
 	            		</a>
 		            	<span>&nbsp;</span>
-	            		<a onclick="alert(this.title); return false;" href="#" title="먼저 좋아요를 취소해주세요." class="btn btn-xs  btn-secondary btn-outline">
+	            		<a onclick="alert(this.title); return false;" href="#" title="먼저 좋아요를 취소해주세요." 
+	            		class="btn btn-xs  btn-secondary btn-outline">
 	            		싫어요 👎
 		            	</a>
 	            	</c:if>
 	            	
                 <c:if test="${actorCanCancelBadReaction}">								
-	            		<a onclick="alert(this.title); return false;" href="#" title="먼저 싫어요를 취소해주세요." class="btn btn-xs  btn-primary btn-outline">
+	            		<a onclick="alert(this.title); return false;" href="#" title="먼저 싫어요를 취소해주세요."
+	            		class="btn btn-xs  btn-primary btn-outline">
 	            		좋아요 👍
 	            		</a>
 		            	<span>&nbsp;</span>
-	            		<a href="/usr/reactionPoint/doCancelBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" class="btn btn-xs  btn-secondary">
+	            		<a href="/usr/reactionPoint/doCancelBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" 
+	            		class="btn btn-xs  btn-secondary">
 	            		싫어요 👎
 		            	</a>
 	            	</c:if>
@@ -127,6 +135,7 @@ function ArticleDetail__increaseHitCout() {
 
 
 <script>
+	// 댓글작성 관련
 	let ReplyWrite__submitFormDone = false;
 	function ReplyWrite__submitForm(form) {
 		if (ReplyWrite__submitFormDone) {
@@ -153,7 +162,8 @@ function ArticleDetail__increaseHitCout() {
 	<div class="container mx-auto px-3">
 		<h1>댓글 작성</h1>
 		<c:if test="${rq.logined}">
-			<form class="table-box-type-1" method="POST" action="../reply/doWrite" onsubmit="ReplyWrite__submitForm(this); return false;">
+			<form class="table-box-type-1" method="POST" action="../reply/doWrite" 
+				onsubmit="ReplyWrite__submitForm(this); return false;">
 				<input type="hidden" name="relTypeCode" value="article" />
 				<input type="hidden" name="relId" value="${article.id}" />
 				<table>
@@ -186,14 +196,47 @@ function ArticleDetail__increaseHitCout() {
 			</form>
 		</c:if>	
 		<c:if test="${rq.notLogined}">
-			<a class="btn btn-link" href="/usr/member/login">로그인</a>후 이용해주세요.
+			<a class="link link-primary" href="/usr/member/login">로그인</a>후 이용해주세요.
 		</c:if>
 	</div>
 </section>
 
 <section class="mt-5">
 	<div class="container mx-auto px-3">
-		<h1>댓글 리스트(${repliesCount})</h1>
+		<h1>댓글 리스트(${replies.size()})</h1>
+		
+		<table class="table table-fixed w-full">
+			<colgroup>
+				<col width="50"/>
+				<col width="100"/>
+				<col width="100"/>
+				<col width="50"/>
+				<col width="100"/>
+				<col />
+			</colgroup>
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>작성날짜</th>
+					<th>수정날짜</th>
+					<th>추천</th>
+					<th>작성자</th>
+					<th>내용</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="reply" items="${replies}">
+					<tr class="align-top">
+						<th>${reply.id}</th>
+						<td>${reply.getForPrintType1RegDate()}</td>
+						<td>${reply.getForPrintType1UpdateDate()}</td>
+						<td>${reply.goodReactionPoint}</td>
+						<td>${reply.extra__writerName}</td>
+						<td>${reply.forPrintBody}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
 </section>
 <!-- 
