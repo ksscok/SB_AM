@@ -103,4 +103,9 @@ public class UsrMemberController {
 		
 		return rq.jsReplace("로그아웃 되었습니다.", "/");
 	}
+	
+	@RequestMapping("/usr/member/myPage")
+	public String showMyPage() {
+		return "usr/member/myPage";
+	}
 }
