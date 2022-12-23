@@ -3,7 +3,6 @@
 
 <!DOCTYPE html>
 <html lang="ko" class="light" data-theme="light">
-<html>
 <head>
 <meta charset="UTF-8">
 <title>${pageTitle}</title>
