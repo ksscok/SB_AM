@@ -55,6 +55,7 @@ public interface MemberRepository {
 			<script>
 			UPDATE `member`
 			<set>
+					updateDate = NOW(),
 				<if test="loginPw != null">
 					loginPw = #{loginPw},
 				</if>
