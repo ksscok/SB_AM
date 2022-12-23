@@ -129,4 +129,29 @@ public class UsrMemberController {
 	public String showModify() {
 		return "usr/member/modify";
 	}
+	
+	@RequestMapping("/usr/member/doModify")
+	@ResponseBody
+	public String doModify(int id, String loginPw, String name, String nickname, String email, String cellphoneNo) {
+		
+		if(Ut.empty(loginPw)) {
+			loginPw = null;
+		}
+		if(Ut.empty(name)) {
+			return rq.jsHistoryBack("name(을) 입력해주세요.");
+		}
+		if(Ut.empty(nickname)) {
+			return rq.jsHistoryBack("nickname(을) 입력해주세요.");
+		}
+		if(Ut.empty(email)) {
+			return rq.jsHistoryBack("email(을) 입력해주세요.");
+		}
+		if(Ut.empty(cellphoneNo)) {
+			return rq.jsHistoryBack("cellphoneNo(을) 입력해주세요.");
+		}
+		
+		ResultData modifyRd = memberService.modify(id, loginPw, name, nickname, email, cellphoneNo);
+		
+		return rq.jsReplace(modifyRd.getMsg(), Ut.f("../member/myPage"));
+	}
 }
