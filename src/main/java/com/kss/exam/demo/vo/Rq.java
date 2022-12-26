@@ -121,4 +121,12 @@ public class Rq {
 		resp.setContentType("text/html; charset=UTF-8");
 		print(Ut.jsReplace(msg, uri));
 	}
+	
+	public String getLoginUri() {
+		return "../member/login?afterLoginUri=" + getAfterLoginUri();
+	}
+
+	public String getAfterLoginUri() {
+		return getEncodedCurrentUri();
+	}
 }
