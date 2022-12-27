@@ -11,7 +11,12 @@
       alert('처리중입니다.');
       return;
     }
-    
+    form.boardId.value = form.boardId.value.trim();
+    if (form.boardId.value == 0) {
+      alert('게시판 번호를 선택해주세요.');
+      form.boardId.focus();
+      return;
+    }
     form.title.value = form.title.value.trim();
     if (form.title.value.length == 0) {
       alert('제목을 입력해주세요.');
@@ -59,7 +64,8 @@
           <tr>
             <th>제목</th>
             <td>
-              <input required="required" name="title" type="text" placeholder="제목" class="w-96 input input-bordered w-full max-w-xs"/>           </td>
+              <input required="required" name="title" type="text" placeholder="제목" class="w-96 input input-bordered w-full max-w-xs"/>           
+            </td>
           </tr>
           <tr>
             <th>내용</th>

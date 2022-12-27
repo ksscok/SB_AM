@@ -48,8 +48,11 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public String doAdd(int boardId, String title, String body, String replaceUri) {
+	public String doAdd(Integer boardId, String title, String body, String replaceUri) {
 		
+		if(Ut.empty(boardId)) {
+			return rq.jsHistoryBack("게시판을 선택해주세요.");
+		}
 		if (Ut.empty(title)) {
 			return rq.jsHistoryBack("title을 입력해주세요.");
 		}
