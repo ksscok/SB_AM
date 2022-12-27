@@ -89,7 +89,18 @@ public class Rq {
 		return "common/js";
 	}
 	
+	public String historyBackJsOnView(String resultCode, String msg) {
+		req.setAttribute("msg", String.format("[%s] %s", resultCode, msg));
+		req.setAttribute("historyBack", true);
+		return "common/js";
+	}
+	
 	public String jsHistoryBack(String msg) {
+		return Ut.jsHistoryBack(msg);
+	}
+	
+	public String jsHistoryBack(String resultCode, String msg) {
+		msg = String.format("[%s] %s", resultCode, msg);
 		return Ut.jsHistoryBack(msg);
 	}
 
@@ -133,6 +144,10 @@ public class Rq {
 	public String getLogoutUri() {	
 		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
 	}
+	
+	public String getJoinUri() {	
+		return "../member/join?afterJoinUri=" + getAfterJoinUri();
+	}
 
 	public String getAfterLoginUri() {
 		String requestUri = req.getRequestURI();
@@ -149,6 +164,20 @@ public class Rq {
 	}
 	
 	public String getAfterLogoutUri() {
+		String requestUri = req.getRequestURI();
+
+		// 필요하다면 활성화
+		/*
+		switch (requestUri) {
+		case "/usr/article/write":
+			return "";
+		}
+		*/
+
+		return getEncodedCurrentUri();
+	}
+	
+	public String getAfterJoinUri() {
 		String requestUri = req.getRequestURI();
 
 		// 필요하다면 활성화
