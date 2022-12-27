@@ -91,7 +91,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public String doLogout() {
+	public String doLogout(@RequestParam(defaultValue = "/") String afterLogoutUri) {
 		
 		if(rq.isLogined() == false) {
 			return rq.jsHistoryBack("로그인 되어있지 않습니다.");
@@ -99,7 +99,7 @@ public class UsrMemberController {
 		
 		rq.logout();
 		
-		return rq.jsReplace("로그아웃 되었습니다.", "/");
+		return rq.jsReplace("로그아웃 되었습니다.", afterLogoutUri);
 	}
 	
 	@RequestMapping("/usr/member/myPage")
