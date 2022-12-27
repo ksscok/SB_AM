@@ -58,10 +58,7 @@
               <td>${article.goodReactionPoint}</td>
 							<td>${article.extra__writerName}</td>
 							<td>
-								<a class="btn-text-link block w-full truncate" href="../article/detail?id=${article.id}">
-								${article.title}
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum culpa fugit odit quae ducimus omnis nam error temporibus quaerat nemo a hic amet voluptatem! Facilis eveniet quod nulla sit maiores!
-								</a>
+								<a class="btn-text-link block w-full truncate" href="${rq.getArticleDetailUriFromArticleList(article)}">${article.title}</a>
 		          </td>
 						</tr>
 					</c:forEach>
