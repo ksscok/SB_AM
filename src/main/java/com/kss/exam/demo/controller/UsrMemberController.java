@@ -1,10 +1,15 @@
 package com.kss.exam.demo.controller;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
+import com.kss.exam.demo.service.GenFileService;
 import com.kss.exam.demo.service.MemberService;
 import com.kss.exam.demo.util.Ut;
 import com.kss.exam.demo.vo.Member;
@@ -14,44 +19,60 @@ import com.kss.exam.demo.vo.Rq;
 @Controller
 public class UsrMemberController {	
 	private MemberService memberService;
+	private GenFileService genFileService;
 	private Rq rq;
 	
-	public UsrMemberController(MemberService memberService, Rq rq) {
+	public UsrMemberController(MemberService memberService, GenFileService genFileService, Rq rq) {
 		this.memberService = memberService;
+		this.genFileService = genFileService;
 		this.rq = rq;
 	}
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email, 
-			@RequestParam(defaultValue = "/") String afterLoginUri) {
-		
-		if(Ut.empty(loginId)) {
+	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email,  @RequestParam(defaultValue = "/") String afterLoginUri, MultipartRequest multipartRequest) {
+		if ( Ut.empty(loginId) ) {
 			return rq.jsHistoryBack("F-1", "loginId(을)를 입력해주세요.");
 		}
-		if(Ut.empty(loginPw)) {
+		
+		if ( Ut.empty(loginPw) ) {
 			return rq.jsHistoryBack("F-2", "loginPw(을)를 입력해주세요.");
 		}
-		if(Ut.empty(name)) {
+		
+		if ( Ut.empty(name) ) {
 			return rq.jsHistoryBack("F-3", "name(을)를 입력해주세요.");
 		}
-		if(Ut.empty(nickname)) {
+		
+		if ( Ut.empty(nickname) ) {
 			return rq.jsHistoryBack("F-4", "nickname(을)를 입력해주세요.");
 		}
-		if(Ut.empty(cellphoneNo)) {
+		
+		if ( Ut.empty(cellphoneNo) ) {
 			return rq.jsHistoryBack("F-5", "cellphoneNo(을)를 입력해주세요.");
 		}
-		if(Ut.empty(email)) {
+		
+		if ( Ut.empty(email) ) {
 			return rq.jsHistoryBack("F-6", "email(을)를 입력해주세요.");
 		}
 		
 		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
-		
-		if(joinRd.isFail()) {
+
+		if ( joinRd.isFail() ) {
 			return rq.jsHistoryBack(joinRd.getResultCode(), joinRd.getMsg());
 		}
-		
+
+		int newMemberId = (int)joinRd.getBody().get("id");
+
 		String afterJoinUri = "../member/login?afterLoginUri=" +  Ut.getUriEncoded(afterLoginUri);
+
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+		
+		for (String fileInputName : fileMap.keySet()) {
+            MultipartFile multipartFile = fileMap.get(fileInputName);
+            if ( multipartFile.isEmpty() == false ) {
+                genFileService.save(multipartFile, newMemberId);
+            }
+        }
 		
 		return rq.jsReplace("회원가입이 완료되었습니다. 로그인 후 이용해주세요.", afterJoinUri);
 	}
